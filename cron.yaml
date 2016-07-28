@@ -1,0 +1,4 @@
+cron:
+- description: Send a reminder email to users that have active game
+  url: /crons/send_reminder
+  schedule: every 12 hours

@@ -1,0 +1,84 @@
+#Full Stack Nanodegree Project 4 Battleship Game
+
+##Design Decisions
+
+###Game Play
+There should be two options, 2 player game and against AI game. This option can be set when a new game created. 
+The number_of_players should be set to 2 for a 2 player game and to 1 for an against AI game.
+against AI version is not implemented in this version.
+
+When a new game created, two boards for each player also created.
+board_ships board is a 1 dimensional array which keeps the ship type that placed in a position.
+board_hit board is also a 1 dimensional array which keeps whether the position is fired or not.
+In order to keep boards in 1 dimensional array 2 dimensional xy coordinates should be converted to a 1 dimensional index. 
+Moreover, letter and a digit coordinates such as 'A5' should be able to converted to xy coordinates and 1 dimensionan indexes. 
+This conversions can be performed with in Point class.
+
+Each player should place their ships. There are 5 type of ships by default. Details are given in Models section, ShipType.
+When placing ships the following shall be controlled:
+ - Each user can place a specific type of ship for only once.
+ - A ship can not be placed next to another ship, there must be at least one square between ships.
+ 
+When both players place their ships, then they can make move (fire).
+Make move operation requires the position parameter and it should be given in letter and digit format. The format should be converted 
+to 1 dimensional index. 
+When a user tries to make a guess, the following shall be controlled:
+ - Is it the users turn?
+ - Is the position valid?
+ - Is the position already fired?
+After controlling, the action will be performed. 
+If there exists a ship in the opponents board, the action will result with a 'hit', otherwise with a 'miss'
+After a 'hit' it is controlled whether the ship sank or not. If the ship is sank it is controlled whether the all ships of the opponent
+sank or not. If all ships sank, then the game is over and the player that made the move is winner.
+
+##Models
+###User
+ - name : user name
+ - email
+ - wins : number of wins of a player
+ - losses : number of losses of a player
+ - winloss_ration : number of wins over total games played
+ - total_guesses : total number of guesses in all games played
+ 
+###Game
+ - number_of_players : required to keep whether the game is for 2 players or against ai
+ - player1 : first player
+ - player2 : second player
+ - board_ships1 : an array to keep the board for placing the ships for player1
+ - board_ships2 : an array to keep the board for placing the ships for player2
+ - board_hit1 : an array to keep the board for fired coordinates for player1
+ - board_hit2 : an array to keep the board for fired coordinates for player1 
+ - turn : turn of the game
+ - player1_turn : does player1 required to take an action
+ - player2_turn : does player2 required to take an action
+ - game_over : does the game over
+ 
+###ShipType (Enumaration)
+ - CARRIER = 1 (size: 5)
+ - BATTLESHIP = 2 (size: 4)
+ - SUBMARINE = 3 (size: 3)
+ - CRUISER = 4  (size: 3)
+ - DESTROYER = 5  (size: 2)
+ 
+###Ship
+ - user : user key for the ship
+ - game : game key
+ - type : ShipType (Enumaration) 
+ - position : array position indexes that ship placed
+ - hits : number of hits that the ship take
+ 
+###Point
+ Used for converting coordinates, x y positions, and 1 dimensional indexes to each other
+ 
+###Score
+ - user : user key for score
+ - date : the date when the game ends
+ - won : whether the user won or lost
+ - guesses : total number of guesses that the user made
+ 
+###History
+ - user : user key for score
+ - turn : the turn of the game
+ - player_turn : which player's move
+ - guess : guess that the player made
+ - result : result of the guess
